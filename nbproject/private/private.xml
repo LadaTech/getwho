@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/getwhois/functions.php</file>
-            <file>file:/C:/xampp/htdocs/getwhois/search.php</file>
-            <file>file:/C:/xampp/htdocs/getwhois/contact.php</file>
+            <file>file:/D:/xampp/htdocs/getwho/signin.php</file>
+            <file>file:/D:/xampp/htdocs/getwho/contact.php</file>
+            <file>file:/D:/xampp/htdocs/getwho/index.php</file>
+            <file>file:/D:/xampp/htdocs/getwho/header.php</file>
+            <file>file:/D:/xampp/htdocs/getwho/contact_us.php</file>
+            <file>file:/D:/xampp/htdocs/getwho/login.php</file>
         </group>
     </open-files>
 </project-private>

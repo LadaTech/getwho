@@ -5,7 +5,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 if (isset($_POST['sendmessage'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -46,12 +45,3 @@ if (isset($_POST['sendmessage'])) {
     header("location:contact.php");
 }
 
-if(isset($_POST['sign_in'])){
-   $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $email = $_POST['email'];
-    $password = base64_encode($_POST['password']);
-    $cpassword = base64_encode($_POST['cpassword']);
-    $phonenumber = $_POST['phoneno'];
-    $address=$_POST['address'];
-}
