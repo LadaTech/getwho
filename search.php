@@ -27,8 +27,10 @@ if (isset($_POST['submit'])) {
             $tdlsArray[$tdl] = 'Registered';
         }
     }
+    
     if (is_string($server_results)) {
         ?>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="takenDomaintitle">
@@ -130,7 +132,106 @@ if (isset($_POST['submit'])) {
         $updated_information = $server_results['Updated Date'];
         ?>
         <!-- Hero Section -->
-
+        <div class="orange-bg">
+	<div class="wrapper">
+    <div class="dca-search">
+      <h2>Get a Domain Name</h2>
+      <div class="dmn-sbox">
+        <form name="domain-search" method="post" action="#">
+            <input type="hidden" value="enable" name="phrase_search">
+            <input type="hidden" value="check_availability" name="action">
+            <input type="text" name="txtDomainName" value="">
+            <button data-value="Search again">Search again</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+        <div class="container">
+            <div class="row">
+        <div class="dca-search-result-content lfloat">
+           <div class="primary-result-section dca-unavailable">
+             
+        <div class="primary-result">                
+                    
+                    <div class="inline-block dca-domain-name dca-dn-unavailable">
+                        <span class="dca-dn-unavailable-icon inline-block"></span>
+                        <span class="dca-primary-dn inline-block"><span class="namevalue">godaddy.com<br>is <span class="dca-red-text">unavailable</span></span>
+                    </span></div>            
+                
+                
+                
+                <div class="inline-block dca-domain-avail">
+                  <a href="http://www.whois.com/whois/ladatechnologies.com" target="blank" class="dca-lookup" title="View domain registration details">Whois</a><a href="https://sedo.com/checkdomainoffer.php?partnerid=13815&amp;domain=ladatechnologies.com" title="Hire an expert broker to make an offer to the owner of the domain name" target="_blank" class="dca-lookup">Acquire</a>
+                </div>
+                
+                
+            </div></div>
+            <div class="secondary-section">
+                <div class="secondary-result-section">
+                    <div class="secondary-result">
+                        <div class="dca-domain-name inline-block"><span>godaddy.com</span></div>
+                        <div class="inline-block dca-domain-avail">
+                            <span class="inline-block select-yr">
+                                <select>
+                                    <option>1 year</option>
+                                    <option>2 years</option>
+                                </select>
+                            </span>
+                            <span class="inline-block domain-pricing">$8.87</span>
+                            <span class="inline-block dca-select-button">                         
+                                 <button class="select-domain btn btn-success" data-name="godaddy.net" data-original="Select">Select</button>
+                                </span>
+                        </div>
+                    </div>
+                    
+                    <div class="secondary-result">
+                    <div class="inline-block dca-domain-name">
+                        <span>krishnagenaralstore.news</span>
+                        
+                        
+                        
+                    </div>
+                    <div class="inline-block dca-domain-avail">
+                        
+                            <span class="inline-block select-yr">
+                                <select>
+                                    <option>1 year</option>
+                                    <option>2 years</option>
+                                </select>
+                            </span>
+                            <span class="inline-block">
+                                <span class="dca-pricing">                            
+                                        <em class="original-price hidden-xs">$ 23.88<br></em>
+                                            $ 2.88<br>
+                                            <em class="discount-offered dca-red-text">87.94% off</em>
+                                </span>
+                            </span>
+                        
+                        <span class="inline-block dca-select-button">                          
+                           <button class="select-domain btn btn-success" data-name="krishnagenaralstore.news" data-original="Select">Select</button>
+                        </span>
+                    </div>
+                    
+                    <span class="dca-sale-tag"></span>
+                    
+                    <div id="verify-search-result" class="verify-search-result-box" style="display: none;">
+                        <span class="classic-ani">
+                            This domain has been marked by the <b>.news</b> registry as a premium domain name with a price of  <b>$23.88</b>. Do you want to continue?
+                            <span class="addToCart">Yes, add to cart</span>
+                            <em class="close-verify-search-result">Cancel</em>
+                            <span class="tooltip-arrow"></span>
+                        </span>
+                    </div>
+                    <span class="clear"></span>
+                </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+            </div></div>
+        
         <div class="container inner-padding7">
             <div class="row">
                 <div class="col-md-12">
