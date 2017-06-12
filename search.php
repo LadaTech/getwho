@@ -2,9 +2,9 @@
 include_once('header.php');
 include_once('functions.php');
 if (isset($_POST['submit'])) {
-    $domain_name = $_POST['domainsearch'];  
-    $domain_list= explode(".", $domain_name);
-    $name_domain=$domain_list[0];
+    $domain_name = $_POST['domainsearch'];
+    $domain_list = explode(".", $domain_name);
+    $name_domain = $domain_list[0];
     $domaintype = end(explode(".", $domain_name));
 //    $domaintype = array_shift(explode(".", $domain_name));    
 //$domaintype_result= array_slice($domaintype,1);
@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
             $tdlsArray[$tdl] = 'Registered';
         }
     }
-    
+
     if (is_string($server_results)) {
         ?>
 
@@ -91,147 +91,230 @@ if (isset($_POST['submit'])) {
         </div>
         <?php
     } else {
+//        echo "<pre>";
+//        print_r($server_results);exit;
+        if (isset($server_results['name'])) {
         $name = $server_results['name'];
+        }
+        if (isset($server_results['Registrar WHOIS Server'])) {
         $whois_server = $server_results['Registrar WHOIS Server'];
+        }
+        if (isset($server_results['referrer'])) {
         $referral_url = $server_results['referrer'];
+        }
+        if (isset($server_results['status'])) {
         $status = $server_results['status'];
+        }
+        if (isset($server_results['expires'])) {
         $expires_on = date('Y-m-d', strtotime($server_results['expires']));
+        }
+        if (isset($server_results['created'])) {
         $registered_on = date('Y-m-d', strtotime($server_results['created']));
+        }
+        if (isset($server_results['changed'])) {
         $updated_on = date('Y-m-d', strtotime($server_results['changed']));
+        }
+        if (isset($server_results['sname1'])) {
         $name_server1 = $server_results['sname1'];
+        }
+        if (isset($server_results['sname2'])) {
         $name_server2 = $server_results['sname2'];
+        }
+        if (isset($server_results['svalue1'])) {
         $server_value1 = $server_results['svalue1'];
+        }
+        if (isset($server_results['svalue2'])) {
         $server_value2 = $server_results['svalue2'];
+        }
+        if (isset($server_results['Registrant Name'])) {
         $registrant_name = $server_results['Registrant Name'];
+        }
+        if (isset($server_results['Registrant Organization'])) {
         $registrant_organization = $server_results['Registrant Organization'];
-        $registrant_address = $server_results['Registrant Street'];
+        }
+        if (isset($server_results['Registrant Organization'])) {
+        $registrant_address = $server_results['Registrant Organization'];
+        }
+        if (isset($server_results['Registrant City'])) {
         $registrant_city = $server_results['Registrant City'];
+        }
+        if (isset($server_results['Registrant State/Province'])) {
         $registrant_state = $server_results['Registrant State/Province'];
+        }
+        if (isset($server_results['Registrant Postal Code'])) {
         $registrant_postalcode = $server_results['Registrant Postal Code'];
+        }
+        if (isset($server_results['Registrant Country'])) {
         $registrant_country = $server_results['Registrant Country'];
+        }
+        if (isset($server_results['Registrant Phone'])) {
         $registrant_phone = $server_results['Registrant Phone'];
+        }
+        if (isset($server_results['Registrant Email'])) {
         $registrant_email = $server_results['Registrant Email'];
-        $administrative_name = $server_results['Admin Name'];
+        }
+        if (isset($server_results['Admin Name'])) {
+        $administrative_name = $server_results['Admin Name'];}
+        if (isset($server_results['Admin Organization'])) {        
         $administrative_organization = $server_results['Admin Organization'];
+        }
+        if (isset($server_results['Admin Street'])) {
         $administrative_address = $server_results['Admin Street'];
+        }
+        if (isset($server_results['Admin City'])) {
         $administrative_city = $server_results['Admin City'];
+        }
+        if (isset($server_results['Admin State/Province'])) {
         $administrative_state = $server_results['Admin State/Province'];
+        }
+        if (isset($server_results['Admin Postal Code'])) {
         $administrative_postalcode = $server_results['Admin Postal Code'];
+        }
+        if (isset($server_results['Admin Country'])) {
         $administrative_country = $server_results['Admin Country'];
+        }
+        if (isset($server_results['Admin Phone'])) {
         $administrative_phone = $server_results['Admin Phone'];
+        }
+        if (isset($server_results['Admin Email'])) {
         $administrative_email = $server_results['Admin Email'];
+        }
+        if (isset($server_results['Tech Name'])) {
         $technical_name = $server_results['Tech Name'];
+        }
+        if (isset($server_results['Tech Organization'])) {
         $technical_organization = $server_results['Tech Organization'];
+        }
+        if (isset($server_results['Tech Street'])) {
         $technical_address = $server_results['Tech Street'];
+        }
+        if (isset($server_results['Tech City'])) {
         $technical_city = $server_results['Tech City'];
+        }
+        if (isset($server_results['Tech State/Province'])) {
         $technical_state = $server_results['Tech State/Province'];
+        }
+        if (isset($server_results['Tech Postal Code'])) {
         $technical_postalcode = $server_results['Tech Postal Code'];
+        }
+        if (isset($server_results['Tech Country'])) {
         $technical_country = $server_results['Tech Country'];
+        }
+        if (isset($server_results['Tech Phone'])) {
         $technical_phone = $server_results['Tech Phone'];
+        }
+        if (isset($server_results['Tech Email'])) {
         $technical_email = $server_results['Tech Email'];
-        $updated_information = $server_results['Updated Date'];
+        }
+        if (isset($server_results['>>> Last update of WHOIS database'])) {
+        $updated_information = $server_results['>>> Last update of WHOIS database'];
+//            echo "<pre>";
+//        print_r($server_results['Update Date']);exit;
+        }
+        
         ?>
         <!-- Hero Section -->
         <div class="orange-bg">
-	<div class="wrapper">
-    <div class="dca-search">
-      <h2>Get a Domain Name</h2>
-      <div class="dmn-sbox">
-        <form name="domain-search" method="post" action="#">
-            <input type="hidden" value="enable" name="phrase_search">
-            <input type="hidden" value="check_availability" name="action">
-            <input type="text" name="txtDomainName" value="">
-            <button data-value="Search again">Search again</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-        <div class="container">
-            <div class="row">
-        <div class="dca-search-result-content lfloat">
-           <div class="primary-result-section dca-unavailable">
-             
-        <div class="primary-result">                
-                    
-                    <div class="inline-block dca-domain-name dca-dn-unavailable">
-                        <span class="dca-dn-unavailable-icon inline-block"></span>
-                        <span class="dca-primary-dn inline-block"><span class="namevalue">godaddy.com<br>is <span class="dca-red-text">unavailable</span></span>
-                    </span></div>            
-                
-                
-                
-                <div class="inline-block dca-domain-avail">
-                  <a href="http://www.whois.com/whois/ladatechnologies.com" target="blank" class="dca-lookup" title="View domain registration details">Whois</a><a href="https://sedo.com/checkdomainoffer.php?partnerid=13815&amp;domain=ladatechnologies.com" title="Hire an expert broker to make an offer to the owner of the domain name" target="_blank" class="dca-lookup">Acquire</a>
-                </div>
-                
-                
-            </div></div>
-            <div class="secondary-section">
-                <div class="secondary-result-section">
-                    <div class="secondary-result">
-                        <div class="dca-domain-name inline-block"><span>godaddy.com</span></div>
-                        <div class="inline-block dca-domain-avail">
-                            <span class="inline-block select-yr">
-                                <select>
-                                    <option>1 year</option>
-                                    <option>2 years</option>
-                                </select>
-                            </span>
-                            <span class="inline-block domain-pricing">$8.87</span>
-                            <span class="inline-block dca-select-button">                         
-                                 <button class="select-domain btn btn-success" data-name="godaddy.net" data-original="Select">Select</button>
-                                </span>
-                        </div>
+            <div class="wrapper">
+                <div class="dca-search">
+                    <h2>Get a Domain Name</h2>
+                    <div class="dmn-sbox">
+                        <form name="domain-search" method="post" action="search.php">
+                            <input type="hidden" value="enable" name="phrase_search">
+                            <input type="hidden" value="check_availability" name="action">
+                            <input type="text" name="domainsearch" id="domainsearch" value="">
+                            <!--                            <button data-value="Search again">Search again</button>-->
+                            <button type="submit" class="btn btn-sm" name="submit" id="submit" data-value="Search again">Search again</button>
+                        </form>
                     </div>
-                    
-                    <div class="secondary-result">
-                    <div class="inline-block dca-domain-name">
-                        <span>krishnagenaralstore.news</span>
-                        
-                        
-                        
-                    </div>
-                    <div class="inline-block dca-domain-avail">
-                        
-                            <span class="inline-block select-yr">
-                                <select>
-                                    <option>1 year</option>
-                                    <option>2 years</option>
-                                </select>
-                            </span>
-                            <span class="inline-block">
-                                <span class="dca-pricing">                            
-                                        <em class="original-price hidden-xs">$ 23.88<br></em>
-                                            $ 2.88<br>
-                                            <em class="discount-offered dca-red-text">87.94% off</em>
-                                </span>
-                            </span>
-                        
-                        <span class="inline-block dca-select-button">                          
-                           <button class="select-domain btn btn-success" data-name="krishnagenaralstore.news" data-original="Select">Select</button>
-                        </span>
-                    </div>
-                    
-                    <span class="dca-sale-tag"></span>
-                    
-                    <div id="verify-search-result" class="verify-search-result-box" style="display: none;">
-                        <span class="classic-ani">
-                            This domain has been marked by the <b>.news</b> registry as a premium domain name with a price of  <b>$23.88</b>. Do you want to continue?
-                            <span class="addToCart">Yes, add to cart</span>
-                            <em class="close-verify-search-result">Cancel</em>
-                            <span class="tooltip-arrow"></span>
-                        </span>
-                    </div>
-                    <span class="clear"></span>
-                </div>
-                    
                 </div>
             </div>
-            
         </div>
+        <div class="container">
+            <div class="row">
+                <div class="dca-search-result-content lfloat">
+                    <div class="primary-result-section dca-unavailable">
+
+                        <div class="primary-result">                
+
+                            <div class="inline-block dca-domain-name dca-dn-unavailable">
+                                <span class="dca-dn-unavailable-icon inline-block"></span>
+                                <span class="dca-primary-dn inline-block"><span class="namevalue"><?php echo $domain_name ?><br>is <span class="dca-red-text">unavailable</span></span>
+                                </span></div>            
+
+
+
+                            <div class="inline-block dca-domain-avail">
+                                <a href="http://www.whois.com/whois/ladatechnologies.com" target="blank" class="dca-lookup" title="View domain registration details">Whois</a><a href="https://sedo.com/checkdomainoffer.php?partnerid=13815&amp;domain=ladatechnologies.com" title="Hire an expert broker to make an offer to the owner of the domain name" target="_blank" class="dca-lookup">Acquire</a>
+                            </div>
+
+
+                        </div></div>
+                    <div class="secondary-section">
+                        <div class="secondary-result-section">
+                            <div class="secondary-result">
+                                <div class="dca-domain-name inline-block"><span>godaddy.com</span></div>
+                                <div class="inline-block dca-domain-avail">
+                                    <span class="inline-block select-yr">
+                                        <select>
+                                            <option>1 year</option>
+                                            <option>2 years</option>
+                                        </select>
+                                    </span>
+                                    <span class="inline-block domain-pricing">$8.87</span>
+                                    <span class="inline-block dca-select-button">                         
+                                        <button class="select-domain btn btn-success" data-name="godaddy.net" data-original="Select">Select</button>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="secondary-result">
+                                <div class="inline-block dca-domain-name">
+                                    <span>krishnagenaralstore.news</span>
+
+
+
+                                </div>
+                                <div class="inline-block dca-domain-avail">
+
+                                    <span class="inline-block select-yr">
+                                        <select>
+                                            <option>1 year</option>
+                                            <option>2 years</option>
+                                        </select>
+                                    </span>
+                                    <span class="inline-block">
+                                        <span class="dca-pricing">                            
+                                            <em class="original-price hidden-xs">$ 23.88<br></em>
+                                            $ 2.88<br>
+                                            <em class="discount-offered dca-red-text">87.94% off</em>
+                                        </span>
+                                    </span>
+
+                                    <span class="inline-block dca-select-button">                          
+                                        <button class="select-domain btn btn-success" data-name="krishnagenaralstore.news" data-original="Select">Select</button>
+                                    </span>
+                                </div>
+
+                                <span class="dca-sale-tag"></span>
+
+                                <div id="verify-search-result" class="verify-search-result-box" style="display: none;">
+                                    <span class="classic-ani">
+                                        This domain has been marked by the <b>.news</b> registry as a premium domain name with a price of  <b>$23.88</b>. Do you want to continue?
+                                        <span class="addToCart">Yes, add to cart</span>
+                                        <em class="close-verify-search-result">Cancel</em>
+                                        <span class="tooltip-arrow"></span>
+                                    </span>
+                                </div>
+                                <span class="clear"></span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
             </div></div>
-        
+
         <div class="container inner-padding7">
             <div class="row">
                 <div class="col-md-12">
@@ -370,7 +453,7 @@ if (isset($_POST['submit'])) {
                             <div class="col-md-12 queryResponseBody">
                                 <div class="row queryResponseBodyRow">
                                     <div class="col-md-12 queryResponseBodyValue">
-                                        <a href='/whois/ladat.com'><?php echo $name_domain ?>.com</a> | <a href='/whois/ladat.es'><?php echo $name_domain ?>.es</a> | <a href='/whois/ladat.info'><?php echo $name_domain ?>.info</a> | <a href='/whois/ladat.net'>ladat.net</a> | <a href='/whois/ladat.org'>ladat.org</a> | <a href='/whois/ladat.ru'>ladat.ru</a> | <a href='/whois/ladata-bwsk1.net'>ladata-bwsk1.net</a> | <a href='/whois/ladata.cn'>ladata.cn</a> | <a href='/whois/ladata.co'>ladata.co</a> | <a href='/whois/ladata.com'>ladata.com</a> | <a href='/whois/ladata.de'>ladata.de</a> | <a href='/whois/ladata.info'>ladata.info</a> | <a href='/whois/ladata.net'>ladata.net</a> | <a href='/whois/ladata.org'>ladata.org</a> | <a href='/whois/ladata.org.uk'>ladata.org.uk</a> | <a href='/whois/ladata.ru'>ladata.ru</a> | <a href='/whois/ladataappeals.com'>ladataappeals.com</a> | <a href='/whois/ladatab.io'>ladatab.io</a> | <a href='/whois/ladatabank.com'>ladatabank.com</a> | <a href='/whois/ladatabase.com'>ladatabase.com</a> |             </div>
+                                        <a href='/whois/ladat.com'><?php echo $name_domain ?>.com</a> | <a href='/whois/ladat.es'><?php echo $name_domain ?>.es</a> | <a href='/whois/ladat.info'><?php echo $name_domain ?>.info</a> | <a href='/whois/ladat.net'><?php echo $name_domain ?>.net</a> | <a href='/whois/ladat.org'><?php echo $name_domain ?>.org</a> | <a href='/whois/ladat.ru'><?php echo $name_domain ?>.ru</a> | <a href='/whois/ladata-bwsk1.net'>ladata-bwsk1.net</a> | <a href='/whois/ladata.cn'>ladata.cn</a> | <a href='/whois/ladata.co'><?php echo $name_domain ?>.co</a> | <a href='/whois/ladata.com'><?php echo $name_domain ?>.com</a> | <a href='/whois/ladata.de'><?php echo $name_domain ?>.de</a> | <a href='/whois/ladata.info'><?php echo $name_domain ?>.info</a> | <a href='/whois/ladata.net'><?php echo $name_domain ?>.net</a> | <a href='/whois/ladata.org'><?php echo $name_domain ?>.org</a> | <a href='/whois/ladata.org.uk'><?php echo $name_domain ?>.org.uk</a> | <a href='/whois/ladata.ru'><?php echo $name_domain ?>.ru</a> | <a href='/whois/ladataappeals.com'><?php echo $name_domain ?>.com</a> | <a href='/whois/ladatab.io'><?php echo $name_domain ?>.io</a> | <a href='/whois/ladatabank.com'><?php echo $name_domain ?>.com</a> | <a href='/whois/ladatabase.com'><?php echo $name_domain ?>.com</a> |             </div>
                                 </div>
                             </div>
                         </div>
@@ -466,6 +549,7 @@ if (isset($_POST['submit'])) {
                                     </div>
                                     <br>
                                 </div>
+                                
                                 <div class="rawWhois">
                                     <div><strong>Technical Contact Information:</strong></div>
                                     <div>
