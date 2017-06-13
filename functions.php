@@ -11,50 +11,68 @@ function getwhois($query) {
     $norows = mysql_num_rows($rows);
     $whois = new Whois();
     $result = $whois->Lookup($query, false);
-    $register1 = $result['regrinfo']['registered'];
-//    echo $register1;   
-//    echo "<pre>";
-//    print_r($result);
-//    echo "</pre>";   
-//    exit;
+    
     if (isset($result['regrinfo']['registered']) && $result['regrinfo']['registered'] == 'yes') {
         if (array_key_exists("regrinfo", $result)) {
             $regrinfo_result = $result['regrinfo'];
-            $register['registered'] = $registered = $regrinfo_result['registered'];
+            $name['registered'] = $registered = $regrinfo_result['registered'];
             if (array_key_exists('domain', $regrinfo_result)) {
                 $domain_result = $regrinfo_result['domain'];
                 if (isset($domain_result['name'])) {
                     $name['name'] = $name_result = $domain_result['name'];
                 }
-                $nserver_result = $domain_result['nserver'];
+                $nserver_result = $domain_result['nserver'];               
                 $status_result = $domain_result['status'];
+               
                 if (is_array($status_result)) {
-                    $status['status'] = $status_value = $status_result[0];
-                } else {
-                    $status['status'] = $status_value = $domain_result['status'];
+                    $name['status'] = $status_value = $status_result[0];
+                } elseif(isset($status_result)){
+                    $name['status'] = $status_value = $status_result['status'];
                 }
+              
                 if (isset($domain_result['changed'])) {
-                    $changed['changed'] = $changed_result = $domain_result['changed'];
+                    $ipdates['changed'] = $changed_result = $domain_result['changed'];
                 }
                 if (isset($domain_result['created'])) {
-                    $created['created'] = $created_result = $domain_result['created'];
+                    $ipdates['created'] = $created_result = $domain_result['created'];
                 }
                 if (isset($domain_result['expires'])) {
-                    $expires['expires'] = $expires_result = $domain_result['expires'];
+                    $ipdates['expires'] = $expires_result = $domain_result['expires'];
                 }
+                
+//                if (isset($domain_result['changed'])) {
+//                    $changed['changed'] = $changed_result = $domain_result['changed'];
+//                }
+//                if (isset($domain_result['created'])) {
+//                    $created['created'] = $created_result = $domain_result['created'];
+//                }
+//                if (isset($domain_result['expires'])) {
+//                    $expires['expires'] = $expires_result = $domain_result['expires'];
+//                }
                 $server_keys = array_keys($nserver_result);
                 $server_values = array_values($nserver_result);
                 if (isset($server_keys['0'])) {
                     $server1['sname1'] = $servername1 = $server_keys['0'];
                 }if (isset($server_keys['1'])) {
-                    $server2['sname2'] = $servername2 = $server_keys['1'];
+                    $server1['sname2'] = $servername2 = $server_keys['1'];
                 }if (isset($server_keys['0'])) {
-                    $svalue1['svalue1'] = $servervalue1 = $server_values['0'];
+                    $server1['svalue1'] = $servervalue1 = $server_values['0'];
                 }if (isset($server_keys['1'])) {
-                    $svalue2['svalue2'] = $servervalue2 = $server_values['1'];
+                    $server1['svalue2'] = $servervalue2 = $server_values['1'];
                 }
+                 
+//                if (isset($server_keys['0'])) {
+//                    $server1['sname1'] = $servername1 = $server_keys['0'];
+//                }if (isset($server_keys['1'])) {
+//                    $server2['sname2'] = $servername2 = $server_keys['1'];
+//                }if (isset($server_keys['0'])) {
+//                    $svalue1['svalue1'] = $servervalue1 = $server_values['0'];
+//                }if (isset($server_keys['1'])) {
+//                    $svalue2['svalue2'] = $servervalue2 = $server_values['1'];
+//                }
             }
-            $merge = array_merge($name, $server1, $server2, $svalue1, $svalue2, $status, $changed, $created, $created, $expires, $register);
+            $merge = array_merge($name, $server1,$ipdates);   
+              
         }
         if (array_key_exists("regyinfo", $result)) {
             $regyinfo_result = $result['regyinfo'];
@@ -62,11 +80,11 @@ function getwhois($query) {
                 $registarar_data['registrar'] = $registrar_result = $regyinfo_result['registrar'];
             }
             if (isset($regyinfo_result['referrer'])) {
-                $referrer_data['referrer'] = $referrer_result = $regyinfo_result['referrer'];
+                $registarar_data['referrer'] = $referrer_result = $regyinfo_result['referrer'];
             }
             $servers_result = $regyinfo_result['servers'];
-            if (isset($regyinfo_result['referrer'])) {
-                $type_data['type'] = $type_result = $regyinfo_result['type'];
+            if (isset($regyinfo_result['type'])) {
+                $registarar_data['type'] = $type_result = $regyinfo_result['type'];
             }
             foreach ($servers_result as $values) {
                 foreach ($values as $values1) {
@@ -118,12 +136,12 @@ function getwhois($query) {
 //            }
             
 
-            $merge1 = array_merge($registarar_data, $referrer_data, $newarray1,$type_data);            
+            $merge1 = array_merge($registarar_data,  $newarray1);    
+
         }
         if (array_key_exists("rawdata", $result)) {
-            $rawdata_result = $result['rawdata'];
+            $rawdata_result = $result['rawdata'];     
 
-//            $moreinformation['moreinfo'] = trim(mysql_real_escape_string(join('', $moreinfo)));
             $combined = array();
             $rawdataCount = count($rawdata_result);
             for ($i = 0; $i < $rawdataCount; $i++) {
@@ -140,6 +158,7 @@ function getwhois($query) {
                 }
             }
         }
+        
         if (isset($combined['Domain Name'])) {
             $Domain_Name = $combined['Domain Name'];
         }
@@ -301,12 +320,15 @@ function getwhois($query) {
         if (isset($combined['URL of the ICANN WHOIS Data Problem Reporting System'])) {
             $URL_of_the_ICANN_WHOIS_Data_Problem_Reporting_System = trim(mysql_real_escape_string($combined['URL of the ICANN WHOIS Data Problem Reporting System']));
         }
-        $moreinfo1['moreinfo'] = $moreinformation = trim(mysql_real_escape_string(join('', $moreinfo)));
-        $merge2 = array_merge($combined, $moreinfo1);
-        $merge3 = array_merge($merge, $merge1, $merge2);
+        $moreinfo1=array();
+        if(isset($moreinfo)){
+        $moreinfo1['moreinfo'] = $moreinformation = trim(mysql_real_escape_string(join('',$moreinfo)));
+        }      
+        $merge2 = array_merge($merge, $merge1,$combined, $moreinfo1);
+
 
         if ($norows >= 1) {
-            return $merge3;
+            return $merge2;
         } else {
             $query = "insert into server_details(name,servername1,servername2,servervalue1,servervalue2,status,changed,created,expires,registered,"
                     . "registrar,referrer,server1,args1,port1,server2,args2,port2,type,Domain_Name,Registry_Domain_ID,Registrar_WHOIS_Server,Registrar_URL,Updated_Date,Creation_Date,Registrar_Registration_Expiration_Date,"
@@ -326,9 +348,10 @@ function getwhois($query) {
                     . "'$Tech_Phone','$Tech_Phone_Ext','$Tech_Fax','$Tech_Fax_Ext','$Tech_Email','$DNSSEC','$Registrar_Abuse_Contact_Email',"
                     . "'$Registrar_Abuse_Contact_Phone','$URL_of_the_ICANN_WHOIS_Data_Problem_Reporting_System','$moreinformation')";
             $sql = mysql_query($query, $con);
-            return $merge3;
+            return $merge2;
         }
-    } else {
+    } 
+    else {
         return "not registered";
     }
 }

@@ -6,20 +6,19 @@ if (isset($_POST['submit'])) {
     $domain_list = explode(".", $domain_name);
     $name_domain = $domain_list[0];
     $domaintype = end(explode(".", $domain_name));
-//    $domaintype = array_shift(explode(".", $domain_name));    
-//$domaintype_result= array_slice($domaintype,1);
-//print_r($domaintype);exit;
     $server_results = getwhois($domain_name);
-//print_r($findresult);exit;
     $con = mysql_connect("localhost", "root", "");
     mysql_select_db("getwhois");
     if (!$con) {
         die('Could not connect: ' . mysql_error());
     }
     $tdls = array('com' => '10', 'in' => '5', 'net' => '8.8', 'info' => '12.0', 'org' => '4', 'co.in' => '2', 'biz' => '12', 'social' => '19');
+   
     foreach ($tdls as $tdl => $tdlValue) {
+        
         $domaintype = end(explode(".", $domain_name));
         $domainName = str_replace('.' . $domaintype, '.' . $tdl, $domain_name);
+
         $server_result = getwhois($domainName);
         if ($server_result == 'not registered') {
             $tdlsArray[$tdl] = 'Not Registered';
@@ -90,14 +89,15 @@ if (isset($_POST['submit'])) {
             </div>			
         </div>
         <?php
-    } else {
+    } 
+    else {
 //        echo "<pre>";
-//        print_r($server_results);exit;
+//        print_r($server_results);
         if (isset($server_results['name'])) {
         $name = $server_results['name'];
         }
-        if (isset($server_results['Registrar WHOIS Server'])) {
-        $whois_server = $server_results['Registrar WHOIS Server'];
+        if (isset($server_results['registrar'])) {
+        $whois_server = $server_results['registrar'];
         }
         if (isset($server_results['referrer'])) {
         $referral_url = $server_results['referrer'];
@@ -129,11 +129,13 @@ if (isset($_POST['submit'])) {
         if (isset($server_results['Registrant Name'])) {
         $registrant_name = $server_results['Registrant Name'];
         }
-        if (isset($server_results['Registrant Organization'])) {
-        $registrant_organization = $server_results['Registrant Organization'];
+        if (isset($server_results['Registrant Street'])) {
+        $registrant_address = $server_results['Registrant Street'];
+        }elseif(isset($server_results['Registrant Street1'])){
+          $registrant_address = $server_results['Registrant Street1'];  
         }
         if (isset($server_results['Registrant Organization'])) {
-        $registrant_address = $server_results['Registrant Organization'];
+        $registrant_organization = $server_results['Registrant Organization'];
         }
         if (isset($server_results['Registrant City'])) {
         $registrant_city = $server_results['Registrant City'];
@@ -154,12 +156,15 @@ if (isset($_POST['submit'])) {
         $registrant_email = $server_results['Registrant Email'];
         }
         if (isset($server_results['Admin Name'])) {
-        $administrative_name = $server_results['Admin Name'];}
+        $administrative_name = $server_results['Admin Name'];        
+        }
         if (isset($server_results['Admin Organization'])) {        
         $administrative_organization = $server_results['Admin Organization'];
         }
         if (isset($server_results['Admin Street'])) {
         $administrative_address = $server_results['Admin Street'];
+        }elseif(isset($server_results['Admin Street1'])){
+         $administrative_address = $server_results['Admin Street1'];   
         }
         if (isset($server_results['Admin City'])) {
         $administrative_city = $server_results['Admin City'];
@@ -187,6 +192,8 @@ if (isset($_POST['submit'])) {
         }
         if (isset($server_results['Tech Street'])) {
         $technical_address = $server_results['Tech Street'];
+        }elseif(isset($server_results['Tech Street1'])){
+          $technical_address = $server_results['Tech Street1'];  
         }
         if (isset($server_results['Tech City'])) {
         $technical_city = $server_results['Tech City'];
@@ -206,11 +213,12 @@ if (isset($_POST['submit'])) {
         if (isset($server_results['Tech Email'])) {
         $technical_email = $server_results['Tech Email'];
         }
-        if (isset($server_results['>>> Last update of WHOIS database'])) {
-        $updated_information = $server_results['>>> Last update of WHOIS database'];
-//            echo "<pre>";
-//        print_r($server_results['Update Date']);exit;
+        if (isset($server_results['Updated Date'])) {
+        $updated_information = $server_results['Updated Date'];
+        } elseif(isset($server_results['Last Updated On'])){
+            $updated_information = $server_results['Last Updated On'];
         }
+            
         
         ?>
         <!-- Hero Section -->
@@ -453,7 +461,7 @@ if (isset($_POST['submit'])) {
                             <div class="col-md-12 queryResponseBody">
                                 <div class="row queryResponseBodyRow">
                                     <div class="col-md-12 queryResponseBodyValue">
-                                        <a href='/whois/ladat.com'><?php echo $name_domain ?>.com</a> | <a href='/whois/ladat.es'><?php echo $name_domain ?>.es</a> | <a href='/whois/ladat.info'><?php echo $name_domain ?>.info</a> | <a href='/whois/ladat.net'><?php echo $name_domain ?>.net</a> | <a href='/whois/ladat.org'><?php echo $name_domain ?>.org</a> | <a href='/whois/ladat.ru'><?php echo $name_domain ?>.ru</a> | <a href='/whois/ladata-bwsk1.net'>ladata-bwsk1.net</a> | <a href='/whois/ladata.cn'>ladata.cn</a> | <a href='/whois/ladata.co'><?php echo $name_domain ?>.co</a> | <a href='/whois/ladata.com'><?php echo $name_domain ?>.com</a> | <a href='/whois/ladata.de'><?php echo $name_domain ?>.de</a> | <a href='/whois/ladata.info'><?php echo $name_domain ?>.info</a> | <a href='/whois/ladata.net'><?php echo $name_domain ?>.net</a> | <a href='/whois/ladata.org'><?php echo $name_domain ?>.org</a> | <a href='/whois/ladata.org.uk'><?php echo $name_domain ?>.org.uk</a> | <a href='/whois/ladata.ru'><?php echo $name_domain ?>.ru</a> | <a href='/whois/ladataappeals.com'><?php echo $name_domain ?>.com</a> | <a href='/whois/ladatab.io'><?php echo $name_domain ?>.io</a> | <a href='/whois/ladatabank.com'><?php echo $name_domain ?>.com</a> | <a href='/whois/ladatabase.com'><?php echo $name_domain ?>.com</a> |             </div>
+                                        <a href='/whois/ladat.com'><?php echo $name_domain ?>.com</a> | <a href='/whois/ladat.es'><?php echo $name_domain ?>.es</a> | <a href='/whois/ladat.info'><?php echo $name_domain ?>.info</a> | <a href='/whois/ladat.net'><?php echo $name_domain ?>.net</a> | <a href='/whois/ladat.org'><?php echo $name_domain ?>.org</a> | <a href='/whois/ladat.ru'><?php echo $name_domain ?>.ru</a> | <a href='/whois/ladata-bwsk1.net'><?php echo $name_domain ?>.net</a> | <a href='/whois/ladata.cn'><?php echo $name_domain ?>.cn</a> | <a href='/whois/ladata.co'><?php echo $name_domain ?>.co</a> | <a href='/whois/ladata.com'><?php echo $name_domain ?>.com</a> | <a href='/whois/ladata.de'><?php echo $name_domain ?>.de</a> | <a href='/whois/ladata.info'><?php echo $name_domain ?>.info</a> | <a href='/whois/ladata.net'><?php echo $name_domain ?>.net</a> | <a href='/whois/ladata.org'><?php echo $name_domain ?>.org</a> | <a href='/whois/ladata.org.uk'><?php echo $name_domain ?>.org.uk</a> | <a href='/whois/ladata.ru'><?php echo $name_domain ?>.ru</a> | <a href='/whois/ladataappeals.com'><?php echo $name_domain ?>.com</a> | <a href='/whois/ladatab.io'><?php echo $name_domain ?>.io</a> | <a href='/whois/ladatabank.com'><?php echo $name_domain ?>.com</a> | <a href='/whois/ladatabase.com'><?php echo $name_domain ?>.com</a> |             </div>
                                 </div>
                             </div>
                         </div>
