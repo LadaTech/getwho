@@ -995,7 +995,7 @@ h2.page-title {
     color: #fff;
     margin: 0;
 }
-.pricing-header:before {
+.pricing-header:before {     
     content: "";
     position: absolute;
     width: 60px;

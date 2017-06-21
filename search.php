@@ -253,7 +253,7 @@ if (isset($_POST['submit'])) {
         </div>
 
 
-        <div class="container inner-padding7">
+        <div class="container inner-padding1">
             <div class="row">
                 <div class="col-md-12">
                     <div class="takenDomaintitle">

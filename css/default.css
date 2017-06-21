@@ -68,6 +68,9 @@ textarea {
 .inner-padding {
     padding: 60px 0px;
 }
+.inner-padding1 {
+    padding: 0px 0px 120px;
+}
 .inner-padding2 {
     padding: 60px 0px 120px;
 }
@@ -309,7 +312,7 @@ textarea {
     color: #303030;
     text-transform: uppercase;
     padding: 4px 20px;     
-    border-radius:0px 10px 10px 0px !important;
+    /* border-radius:0px 10px 10px 0px !important; */
     
 }
 .btn-sm:hover {
