@@ -435,7 +435,7 @@ function getwhois($query, $insertdb = 1) {
                     . "'$Registry_Tech_ID','$Tech_Name','$Tech_Organization','$Tech_Street','$Tech_City','$Tech_State','$Tech_Postal_Code','$Tech_Country',"
                     . "'$Tech_Phone','$Tech_Phone_Ext','$Tech_Fax','$Tech_Fax_Ext','$Tech_Email','$DNSSEC','$Registrar_Abuse_Contact_Email',"
                     . "'$Registrar_Abuse_Contact_Phone','$URL_of_the_ICANN_WHOIS_Data_Problem_Reporting_System','$moreinformation')";
-            $sql = mysql_query($query,$conn);
+            $sql = mysql_query($query);
             return $merge2;
         }
     } else {
