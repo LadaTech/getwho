@@ -1,18 +1,23 @@
 <?php
 
-include('whois.main.php');
-function getwhois($query) {
-    $con = mysql_connect("localhost", "root", "");
-    mysql_select_db("getwhois");
-    if (!$con) {
-        die('Could not connect: ' . mysql_error());
-    }
-    $rows = mysql_query("select * from server_details where name='$query'");
-    $norows = mysql_num_rows($rows);
+include('whois/whois.main.php');
+
+function getwhois($query, $insertdb = 1) {
+
     $whois = new Whois();
     $result = $whois->Lookup($query, false);
-    
+
     if (isset($result['regrinfo']['registered']) && $result['regrinfo']['registered'] == 'yes') {
+        if ($insertdb == 0) {
+            return "registered";
+        }
+        $con = mysql_connect("localhost", "root", "");
+        mysql_select_db("getwhois");
+        if (!$con) {
+            die('Could not connect: ' . mysql_error());
+        }
+        $rows = mysql_query("select * from server_details where name='$query'");
+        $norows = mysql_num_rows($rows);
         if (array_key_exists("regrinfo", $result)) {
             $regrinfo_result = $result['regrinfo'];
             $name['registered'] = $registered = $regrinfo_result['registered'];
@@ -21,15 +26,15 @@ function getwhois($query) {
                 if (isset($domain_result['name'])) {
                     $name['name'] = $name_result = $domain_result['name'];
                 }
-                $nserver_result = $domain_result['nserver'];               
+                $nserver_result = $domain_result['nserver'];
                 $status_result = $domain_result['status'];
-               
+
                 if (is_array($status_result)) {
                     $name['status'] = $status_value = $status_result[0];
-                } elseif(isset($status_result)){
+                } elseif (isset($status_result)) {
                     $name['status'] = $status_value = $status_result['status'];
                 }
-              
+
                 if (isset($domain_result['changed'])) {
                     $ipdates['changed'] = $changed_result = $domain_result['changed'];
                 }
@@ -39,7 +44,7 @@ function getwhois($query) {
                 if (isset($domain_result['expires'])) {
                     $ipdates['expires'] = $expires_result = $domain_result['expires'];
                 }
-                
+
 //                if (isset($domain_result['changed'])) {
 //                    $changed['changed'] = $changed_result = $domain_result['changed'];
 //                }
@@ -60,7 +65,7 @@ function getwhois($query) {
                 }if (isset($server_keys['1'])) {
                     $server1['svalue2'] = $servervalue2 = $server_values['1'];
                 }
-                 
+
 //                if (isset($server_keys['0'])) {
 //                    $server1['sname1'] = $servername1 = $server_keys['0'];
 //                }if (isset($server_keys['1'])) {
@@ -71,8 +76,7 @@ function getwhois($query) {
 //                    $svalue2['svalue2'] = $servervalue2 = $server_values['1'];
 //                }
             }
-            $merge = array_merge($name, $server1,$ipdates);   
-              
+            $merge = array_merge($name, $server1, $ipdates);
         }
         if (array_key_exists("regyinfo", $result)) {
             $regyinfo_result = $result['regyinfo'];
@@ -91,56 +95,45 @@ function getwhois($query) {
                     $newArray[] = $values1;
                 }
             }
+            
             if (isset($newArray[0])) {
-            $newarray1['server1'] = $newArray[0];
+                $newarray1['server1'] = $newArray[0];
+            }else{
+             $newarray1['server1'] = NULL ;  
             }
-            if (isset($newArray[1])){
-            $newarray1['args1'] = $newArray[1];
+            if (isset($newArray[1])) {
+                $newarray1['args1'] = $newArray[1];
+            }else{
+             $newarray1['args1'] = NULL;   
             }
             if (isset($newArray[2])) {
-            $newarray1['port1'] = $newArray[2];
+                $newarray1['port1'] = $newArray[2];
+            }
+            else{
+             $newarray1['port1'] = NULL;   
             }
             if (isset($newArray[3])) {
-            $newarray1['server2'] = $newArray[3];
+                $newarray1['server2'] = $newArray[3];
+            }else{
+             $newarray1['server2'] = NULL ;  
             }
             if (isset($newArray[4])) {
-            $newarray1['args2'] = $newArray[4];
+                $newarray1['args2'] = $newArray[4];
+            }else{
+             $newarray1['args2'] = NULL ;  
             }
             if (isset($newArray[5])) {
-            $newarray1['port2'] = $newArray[5];            
-        }
-           
-//            foreach ($newarray1 as $server) {
-//                if ((is_array($server))) {
-//                    $list = array_merge($list, $server);
-//                }
-//            }
-         
-//            if (isset($newArray[0])) {
-//                $server1_result['server1'] = $server1 = $newArray[0];
-//            }
-//            if (isset($newArray[1])) {
-//                $args1_result['args1'] = $args1 = $newArray[1];
-//            }
-//            if (isset($newArray[2])) {
-//                $port1_result['port1'] = $port1 = $newArray[2];
-//            }
-//            if (isset($newArray[3])) {
-//                $server2_result['server2'] = $server2 = $newArray[3];
-//            }
-//            if (isset($newArray[4])) {
-//                $args2_result['args2'] = $args2 = $newArray[4];
-//            }
-//            if (isset($newArray[5])) {
-//                $port2_result['port2'] = $port2 = $newArray[5];
-//            }
-            
+                $newarray1['port2'] = $newArray[5];
+            }else{
+             $newarray1['port2'] = NULL;   
+            }
 
-            $merge1 = array_merge($registarar_data,  $newarray1);    
 
+
+            $merge1 = array_merge($registarar_data, $newarray1);
         }
         if (array_key_exists("rawdata", $result)) {
-            $rawdata_result = $result['rawdata'];     
+            $rawdata_result = $result['rawdata'];
 
             $combined = array();
             $rawdataCount = count($rawdata_result);
@@ -158,173 +151,279 @@ function getwhois($query) {
                 }
             }
         }
-        
+
         if (isset($combined['Domain Name'])) {
             $Domain_Name = $combined['Domain Name'];
+        }else{
+            $Domain_Name = NULL;
         }
 
         if (isset($combined['Registry Domain ID'])) {
             $Registry_Domain_ID = trim(mysql_real_escape_string($combined['Registry Domain ID']));
+        }else{
+            $Registry_Domain_ID = NULL;
         }
         if (isset($combined['Registrar WHOIS Server'])) {
             $Registrar_WHOIS_Server = trim(mysql_real_escape_string($combined['Registrar WHOIS Server']));
+        }else{
+            $Registrar_WHOIS_Server = NULL;
         }
         if (isset($combined['Registrar URL'])) {
             $Registrar_URL = trim(mysql_real_escape_string($combined['Registrar URL']));
+        }else{
+            $Registrar_URL = NULL;
         }
 
         if (isset($combined['Updated Date'])) {
             $Updated_Date = trim(mysql_real_escape_string($combined['Updated Date']));
+        }else{
+            $Updated_Date = NULL;
         }
         if (isset($combined['Creation Date'])) {
             $Creation_Date = trim(mysql_real_escape_string($combined['Creation Date']));
+        }else{
+            $Creation_Date = NULL;
         }
         if (isset($combined['Registrar Registration Expiration Date'])) {
             $Registrar_Registration_Expiration_Date = trim(mysql_real_escape_string($combined['Registrar Registration Expiration Date']));
+        }else{
+            $Registrar_Registration_Expiration_Date = NULL;
         }
         if (isset($combined['Registrar'])) {
             $Registrar1 = trim(mysql_real_escape_string($combined['Registrar']));
+        }else{
+            $Registrar1 = NULL;
         }
         if (isset($combined['Registrar IANA ID'])) {
             $Registrar2 = trim(mysql_real_escape_string($combined['Registrar IANA ID']));
+        }else{
+            $Registrar2 = NULL;
         }
         if (isset($combined['Reseller'])) {
             $Reseller = trim(mysql_real_escape_string($combined['Reseller']));
+        }else{
+            $Reseller = NULL;
         }
         if (isset($combined['Domain Status'])) {
             $Domain_Status = trim(mysql_real_escape_string($combined['Domain Status']));
+        }else{
+            $Domain_Status = NULL;
         }
         if (isset($combined['Registry Registrant ID'])) {
             $Registry_Registrant_ID = trim(mysql_real_escape_string($combined['Registry Registrant ID']));
+        }else{
+            $Registry_Registrant_ID = NULL;
         }
         if (isset($combined['Registrant Name'])) {
             $Registrant_Name = trim(mysql_real_escape_string($combined['Registrant Name']));
+        }else{
+            $Registrant_Name = NULL;
         }
         if (isset($combined['Registrant Organization'])) {
             $Registrant_Organization = trim(mysql_real_escape_string($combined['Registrant Organization']));
+        }else{
+            $Registrant_Organization = NULL;
         }
         if (isset($combined['Registrant Street'])) {
             $Registrant_Street = trim(mysql_real_escape_string($combined['Registrant Street']));
+        }else{
+            $Registrant_Street = NULL;
         }
         if (isset($combined['Registrant City'])) {
             $Registrant_City = trim(mysql_real_escape_string($combined['Registrant City']));
+        }else{
+            $Registrant_City = NULL;
         }
         if (isset($combined['Registrant State/Province'])) {
             $Registrant_State = trim(mysql_real_escape_string($combined['Registrant State/Province']));
+        }else{
+            $Registrant_State = NULL;
         }
         if (isset($combined['Registrant Postal Code'])) {
             $Registrant_Postal_Code = trim(mysql_real_escape_string($combined['Registrant Postal Code']));
+        }else{
+            $Registrant_Postal_Code = NULL;
         }
         if (isset($combined['Registrant Country'])) {
             $Registrant_Country = trim(mysql_real_escape_string($combined['Registrant Country']));
+        }else{
+            $Registrant_Country = NULL;
         }
         if (isset($combined['Registrant Phone'])) {
             $Registrant_Phone = trim(mysql_real_escape_string($combined['Registrant Phone']));
+        }else{
+            $Registrant_Phone = NULL;
         }
         if (isset($combined['Registrant Phone Ext'])) {
             $Registrant_Phone_Ext = trim(mysql_real_escape_string($combined['Registrant Phone Ext']));
+        }else{
+            $Registrant_Phone_Ext = NULL;
         }
         if (isset($combined['Registrant Fax'])) {
             $Registrant_Fax = trim(mysql_real_escape_string($combined['Registrant Fax']));
+        }else{
+            $Registrant_Fax = NULL;
         }
         if (isset($combined['Registrant Fax Ext'])) {
             $Registrant_Fax_Ext = trim(mysql_real_escape_string($combined['Registrant Fax Ext']));
+        }else{
+            $Registrant_Fax_Ext = NULL;
         }
         if (isset($combined['Registrant Email'])) {
             $Registrant_Email = trim(mysql_real_escape_string($combined['Registrant Email']));
+        }else{
+            $Registrant_Email = NULL;
         }
         if (isset($combined['Registry Admin ID'])) {
             $Registry_Admin_ID = trim(mysql_real_escape_string($combined['Registry Admin ID']));
+        }else{
+            $Registry_Admin_ID = NULL;
         }
         if (isset($combined['Admin Name'])) {
             $Admin_Name = trim(mysql_real_escape_string($combined['Admin Name']));
+        }else{
+            $Admin_Name = NULL;
         }
         if (isset($combined['Admin Organization'])) {
             $Admin_Organization = trim(mysql_real_escape_string($combined['Admin Organization']));
+        }else{
+            $Admin_Organization = NULL;
         }
         if (isset($combined['Admin Street'])) {
             $Admin_Street = trim(mysql_real_escape_string($combined['Admin Street']));
+        }else{
+            $Admin_Street = NULL;
         }
         if (isset($combined['Admin City'])) {
             $Admin_City = trim(mysql_real_escape_string($combined['Admin City']));
+        }else{
+            $Admin_City = NULL;
         }
         if (isset($combined['Admin State/Province'])) {
             $Admin_State = trim(mysql_real_escape_string($combined['Admin State/Province']));
+        }else{
+            $Admin_State = NULL;
         }
         if (isset($combined['Admin Postal Code'])) {
             $Admin_Postal_Code = trim(mysql_real_escape_string($combined['Admin Postal Code']));
+        }else{
+            $Admin_Postal_Code = NULL;
         }
         if (isset($combined['Admin Country'])) {
             $Admin_Country = trim(mysql_real_escape_string($combined['Admin Country']));
+        }else{
+            $Admin_Country = NULL;
         }
         if (isset($combined['Admin Phone'])) {
             $Admin_Phone = trim(mysql_real_escape_string($combined['Admin Phone']));
+        }else{
+            $Admin_Phone = NULL;
         }
         if (isset($combined['Admin Phone Ext'])) {
             $Admin_Phone_Ext = trim(mysql_real_escape_string($combined['Admin Phone Ext']));
+        }else{
+            $Admin_Phone_Ext = NULL;
         }
         if (isset($combined['Admin Fax'])) {
             $Admin_Fax = trim(mysql_real_escape_string($combined['Admin Fax']));
+        }else{
+            $Admin_Fax = NULL;
         }
         if (isset($combined['Admin Email'])) {
             $Admin_Email = trim(mysql_real_escape_string($combined['Admin Email']));
+        }else{
+            $Admin_Email = NULL;
         }
         if (isset($combined['Registry Tech ID'])) {
             $Registry_Tech_ID = trim(mysql_real_escape_string($combined['Registry Tech ID']));
+        }else{
+            $Registry_Tech_ID = NULL;
         }
         if (isset($combined['Tech Name'])) {
             $Tech_Name = trim(mysql_real_escape_string($combined['Tech Name']));
+        }else{
+            $Tech_Name = NULL;
         }
         if (isset($combined['Tech Organization'])) {
             $Tech_Organization = trim(mysql_real_escape_string($combined['Tech Organization']));
+        }else{
+            $Tech_Organization = NULL;
         }
         if (isset($combined['Tech Street'])) {
             $Tech_Street = trim(mysql_real_escape_string($combined['Tech Street']));
+        }else{
+            $Tech_Street = NULL;
         }
         if (isset($combined['Tech City'])) {
             $Tech_City = trim(mysql_real_escape_string($combined['Tech City']));
+        }else{
+            $Tech_City = NULL;
         }
         if (isset($combined['Tech State/Province'])) {
             $Tech_State = trim(mysql_real_escape_string($combined['Tech State/Province']));
+        }else{
+            $Tech_State = NULL;
         }
         if (isset($combined['Tech Postal Code'])) {
             $Tech_Postal_Code = trim(mysql_real_escape_string($combined['Tech Postal Code']));
+        }else{
+            $Tech_Postal_Code = NULL;
         }
         if (isset($combined['Tech Country'])) {
             $Tech_Country = trim(mysql_real_escape_string($combined['Tech Country']));
+        }else{
+            $Tech_Country = NULL;
         }
         if (isset($combined['Tech Phone'])) {
             $Tech_Phone = trim(mysql_real_escape_string($combined['Tech Phone']));
+        }else{
+            $Tech_Phone = NULL;
         }
         if (isset($combined['Tech Phone Ext'])) {
             $Tech_Phone_Ext = trim(mysql_real_escape_string($combined['Tech Phone Ext']));
+        }else{
+            $Tech_Phone_Ext = NULL;
         }
         if (isset($combined['Tech Fax'])) {
             $Tech_Fax = trim(mysql_real_escape_string($combined['Tech Fax']));
+        }else{
+            $Tech_Fax = NULL;
         }
         if (isset($combined['Tech Fax Ext'])) {
             $Tech_Fax_Ext = trim(mysql_real_escape_string($combined['Tech Fax Ext']));
+        }else{
+            $Tech_Fax_Ext = NULL;
         }
         if (isset($combined['Registrant Fax'])) {
             $Tech_Email = trim(mysql_real_escape_string($combined['Tech Email']));
+        }else{
+            $Tech_Email = NULL;
         }
         if (isset($combined['DNSSEC'])) {
             $DNSSEC = trim(mysql_real_escape_string($combined['DNSSEC']));
+        }else{
+            $DNSSEC = NULL;
         }
         if (isset($combined['Registrar Abuse Contact Email'])) {
             $Registrar_Abuse_Contact_Email = trim(mysql_real_escape_string($combined['Registrar Abuse Contact Email']));
+        }else{
+            $Registrar_Abuse_Contact_Email = NULL;
         }
         if (isset($combined['Registrar Abuse Contact Phone'])) {
             $Registrar_Abuse_Contact_Phone = trim(mysql_real_escape_string($combined['Registrar Abuse Contact Phone']));
+        }else{
+            $Registrar_Abuse_Contact_Phone = NULL;
         }
         if (isset($combined['URL of the ICANN WHOIS Data Problem Reporting System'])) {
             $URL_of_the_ICANN_WHOIS_Data_Problem_Reporting_System = trim(mysql_real_escape_string($combined['URL of the ICANN WHOIS Data Problem Reporting System']));
+        }else{
+            $URL_of_the_ICANN_WHOIS_Data_Problem_Reporting_System = NULL;
         }
-        $moreinfo1=array();
-        if(isset($moreinfo)){
-        $moreinfo1['moreinfo'] = $moreinformation = trim(mysql_real_escape_string(join('',$moreinfo)));
-        }      
-        $merge2 = array_merge($merge, $merge1,$combined, $moreinfo1);
+        $moreinfo1 = array();
+        if (isset($moreinfo)) {
+            $moreinfo1['moreinfo'] = $moreinformation = trim(mysql_real_escape_string(join('', $moreinfo)));
+        }
+        $merge2 = array_merge($merge, $merge1, $combined, $moreinfo1);
 
 
         if ($norows >= 1) {
@@ -350,8 +449,7 @@ function getwhois($query) {
             $sql = mysql_query($query, $con);
             return $merge2;
         }
-    } 
-    else {
+    } else {
         return "not registered";
     }
 }
