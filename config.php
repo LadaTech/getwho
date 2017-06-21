@@ -1,7 +1,10 @@
 <?php 
-$conn = mysql_connect("localhost","root","");
-if(!$conn){
-    die("could not connect:".mysql_error());
+if($conn = mysql_connect($server= "localhost", $username ="getwhois_data"))
+{
+    mysql_select_db("getwhois_data",$conn);
+}else{
+    $conn = mysql_connect("localhost","root","");
+    mysql_select_db("getwhois",$conn);
 }
-mysql_select_db("getwhois",$conn);
+
 ?>
