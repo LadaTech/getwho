@@ -1,7 +1,7 @@
 <?php
 
-include('whois/whois.main.php');
-include('config.php');
+include_once('whois/whois.main.php');
+include_once('config.php');
 function getwhois($query, $insertdb = 1) {
     $whois = new Whois();
     $result = $whois->Lookup($query, false);
