@@ -15,9 +15,9 @@ if (isset($_POST['submit'])) {
     $tdls = array('com' => '10', 'in' => '5', 'net' => '8.8', 'info' => '12.0', 'org' => '4', 'co.in' => '2', 'biz' => '12', 'social' => '19');
 
     foreach ($tdls as $tdl => $tdlValue) {
-        $domaintype = end(explode(".", $domain_name));        
+        $domaintype = end(explode(".", $domain_name));
         $domainName = str_replace('.' . $domaintype, '.' . $tdl, $domain_name);
-        $server_result = getwhois($domainName,0);
+        $server_result = getwhois($domainName, 0);
         if ($server_result == 'not registered') {
             $tdlsArray[$tdl] = 'Not Registered';
         } else {
@@ -37,24 +37,26 @@ if (isset($_POST['submit'])) {
             <div class="col-md-12">           
                 <div class="search-content">  
                     <?PHP
-                    if(array_search($domaintype,$tdlsArray));
-                    {?>
-                      <div class = "blocks">
-                                <div class = "domainType">
-                                    <strong><?PHP echo $domaintype; ?></strong>
-                                </div>
-                                <div class = "domainPrice">
-                                    $<?PHP echo $tdls[$domaintype]; ?>
-                                </div>
-                                <div class = "domainStatus domainAvailable">
-                                    Available
-                                </div>
-                            </div> 
-                   <?PHP
-                   unset($tdlsArray[$domaintype]);} 
-                    foreach ($tdlsArray as $tdlKey => $tdlstatus) {   
+                    if (array_search($domaintype, $tdlsArray))
+                        ; {
+                        ?>
+                        <div class = "blocks">
+                            <div class = "domainType">
+                                <strong><?PHP echo $domaintype; ?></strong>
+                            </div>
+                            <div class = "domainPrice">
+                                $<?PHP echo $tdls[$domaintype]; ?>
+                            </div>
+                            <div class = "domainStatus domainAvailable">
+                                Available
+                            </div>
+                        </div> 
+                        <?PHP
+                        unset($tdlsArray[$domaintype]);
+                    }
+                    foreach ($tdlsArray as $tdlKey => $tdlstatus) {
 
-                        
+
                         if ($tdlstatus == 'Registered') {
                             ?>
                             <div class = "blocks">
@@ -96,10 +98,10 @@ if (isset($_POST['submit'])) {
                     <h2><?PHP echo $domain_name
                     ?> - <span>Getwhois information</span></h2>
                     <h2>congratulations your searching Domain is available </h2>
-<!--                    <a href="#" class="btn btn-info">Website info</a>
-                    <a href="#" class="btn btn-info">History</a>
-                    <a href="#" class="btn btn-info">DNS Records</a>
-                    <a href="#" class="btn btn-info">Diagnostics</a>-->
+                    <!--                    <a href="#" class="btn btn-info">Website info</a>
+                                        <a href="#" class="btn btn-info">History</a>
+                                        <a href="#" class="btn btn-info">DNS Records</a>
+                                        <a href="#" class="btn btn-info">Diagnostics</a>-->
                 </div>
 
             </div>			
@@ -263,6 +265,23 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-12">
                     <div class="search-content">
                         <?PHP
+                        if (array_search($domaintype, $tdlsArray))
+                            ; {
+                            ?>
+                            <div class = "blocks">
+                                <div class = "domainType">
+                                    <strong><?PHP echo $domaintype; ?></strong>
+                                </div>
+                                <div class = "domainPrice">
+                                    $<?PHP echo $tdls[$domaintype]; ?>
+                                </div>
+                                <div class = "domainStatus domainTaken">
+                                    Taken
+                                </div>
+                            </div> 
+                            <?PHP
+                            unset($tdlsArray[$domaintype]);
+                        }
                         foreach ($tdlsArray as $tdlKey => $tdlstatus) {
                             if ($tdlstatus == 'Registered') {
                                 ?>
@@ -277,9 +296,9 @@ if (isset($_POST['submit'])) {
                                         Taken
                                     </div>
                                 </div>
-                                <?PHP
-                            } else {
-                                ?>
+                <?PHP
+            } else {
+                ?>
                                 <div class = "blocks">
                                     <div class = "domainType">
                                         <strong><?PHP echo $tdlKey; ?></strong>
@@ -291,10 +310,10 @@ if (isset($_POST['submit'])) {
                                         Available
                                     </div>
                                 </div>
-                                <?PHP
-                            }
-                        }
-                        ?>     
+                <?PHP
+            }
+        }
+        ?>     
                         <div class="col-md-12">
                             <a href="#" class="btn btn-success">Purchase selected domain</a>
                         </div>
@@ -335,7 +354,7 @@ if (isset($_POST['submit'])) {
                                 <div class="row queryResponseBodyRow">
                                     <div class="col-md-4 queryResponseBodyKey">Status</div>
                                     <div class="col-md-8 queryResponseBodyValue">
-                                        <?PHP echo $status ?><br />
+        <?PHP echo $status ?><br />
                                     </div>
                                 </div>
                             </div>
