@@ -7,11 +7,6 @@ if (isset($_POST['submit'])) {
     $name_domain = $domain_list[0];
     $domaintype = end(explode(".", $domain_name));
     $server_results = getwhois($domain_name);
-    $con = mysql_connect("localhost", "root", "");
-    mysql_select_db("getwhois");
-    if (!$con) {
-        die('Could not connect: ' . mysql_error());
-    }
     $tdls = array('com' => '10', 'in' => '5', 'net' => '8.8', 'info' => '12.0', 'org' => '4', 'co.in' => '2', 'biz' => '12', 'social' => '19');
 
     foreach ($tdls as $tdl => $tdlValue) {
