@@ -242,7 +242,7 @@ if (isset($_POST['submit'])) {
                             <input type="hidden" value="check_availability" name="action">
                             <input type="text" name="domainsearch" id="domainsearch" value="">
                             <!--                            <button data-value="Search again">Search again</button>-->
-                            <button type="submit" class="btn btn-sm" name="submit" id="submit" data-value="Search again">Search again</button>
+                            <button type="submit" class="btn search-again" name="submit" id="submit" data-value="Search again">Search again</button>
                         </form>
                     </div>
                 </div>
