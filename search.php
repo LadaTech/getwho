@@ -231,7 +231,7 @@ if (isset($_POST['submit'])) {
             $updated_information = $server_results['Last Updated On'];
         }
         ?>
-        <!-- Hero Section -->
+        <!-- Hero Section -->        
         <div class="orange-bg">
             <div class="wrapper">
                 <div class="dca-search">
@@ -248,6 +248,7 @@ if (isset($_POST['submit'])) {
                 </div>
             </div>
         </div>
+        <div class="add-970x90"><p>add size 970x90</p></div>
 
 
         <div class="container inner-padding1">
@@ -322,12 +323,12 @@ if (isset($_POST['submit'])) {
                         <a href="#" class="btn btn-info">DNS Records</a>
                         <a href="#" class="btn btn-info">Diagnostics</a>
                     </div>
-
+<div class="add-970x90"><p>add size 970x90</p></div>
                 </div>			
             </div>
 
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <div class="domainInfo">
                         <div class="col-md-12 queryResponseHeader">
                             Registor Info
@@ -549,6 +550,12 @@ if (isset($_POST['submit'])) {
                         </div>
 
 
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="sideBar">
+                    <div class="add-250x250"><p>add size 250x250</p></div>
+                    <div class="add-160x600"><p>add size 160x600</p></div>
                     </div>
                 </div>
             </div>

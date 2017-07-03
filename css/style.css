@@ -92,9 +92,19 @@
 ----------------------------------
 */
 
+.add-970x90{width:970px; height: 90px; background:#ccc; margin: 0px auto;}
+.add-970x90 p{font-size:14px; text-align:center;}
+
+.add-250x250{width:250px; height: 250px; background:#ccc; margin: 0px auto;}
+.add-250x250 p{font-size:14px; text-align:center;}
+.add-160x600{width:160px; height:600px; background:#ccc; margin-top:25px; float:right;}
+
+
+.sideBar{width:100%; margin:30px auto;}
+
 .orange-bg {
-    background: #02919e;
-    padding: 35px 0;  margin-bottom: 20px;
+    background: #02919e; margin-top:15px;
+    padding: 25px 0px 15px;  margin-bottom: 20px;
 }
 .dca-search {
     text-align: center;
@@ -123,7 +133,7 @@
     box-shadow: 0 3px 1px #b96a24;
     color: #fca456;
     font: 25px 'Lato',sans-serif;
-    padding: 30px 40px;
+    padding: 10px 20px;
     width: 755px;
     border: none;
     outline: none;
@@ -142,7 +152,7 @@
     font: 18px 'Lato',sans-serif;
     margin-left: -287px;
     margin-top: 7px;
-    padding: 27px 0;
+    padding: 7px 0;
     text-transform: uppercase;
     -webkit-transition: background 0.2s ease-in-out 0s;
     -moz-transition: background 0.2s ease-in-out 0s;
@@ -2566,7 +2576,7 @@ h2.page-title {
     font-weight: bold;
     letter-spacing: 0px;
     font-size: 20px;}
-.history-panel{background-color: #3f84a4; padding:20px 50px; height:160px; margin-top:30px; }
+.history-panel{background-color: #3f84a4; padding:20px 50px; height:160px; margin-top:30px; margin-bottom:20px; }
 .history-panel h2{text-align:center; color:#fff; margin:5px 0px 20px;}
 .history-panel span{font-weight:normal; font-size:16px; text-transform:capitalize;}
 
@@ -2755,4 +2765,6 @@ h2.page-title {
     vertical-align: middle;
     width: 25%;
 }
-.search-agian:hover{color:#ffff00;}
+.dca-search button:hover {
+    color: #ffff00;
+}
