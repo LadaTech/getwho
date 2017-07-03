@@ -4,7 +4,7 @@ session_start();
 ?><!-- Hero Section -->
 
 
-<div class="service-area inner-padding7">
+<div class="service-area inner-padding5">
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-sm-12 col-xs-12"></div>
@@ -15,16 +15,20 @@ session_start();
                 }
                 ?>
                 <h3>Log in to Get Who is</h3>
-                <form id="login" name="login" method="post" enctype="multipart/form-data" action="signin_form.php">
+                <form id="login" name="login" method="post" class="form-horizontal" enctype="multipart/form-data" action="signin_form.php">
                     <div class="form-group">
-                        <label for="Email">Email address</label>
+                        <label for="Email" class="control-label col-sm-4" id="cpassword">Email</label>
+						<div class="col-sm-8">
                         <input type="email" class="form-control" id="Email" name="email" placeholder="Email">
+						</div>
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
+                        <label for="password" class="control-label col-sm-4">Password</label>
+						<div class="col-sm-8">
                         <input type="password" class="form-control" id="password" name="password" placeholder="password">
+						</div>
                     </div>    
-                    <div class="forgot">
+                    <div class="form-group forgot">
                         <label>
                             <a href="#">Forgot Password?</a>
                         </label>

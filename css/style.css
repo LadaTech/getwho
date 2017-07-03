@@ -83,7 +83,7 @@
     }
 }
 .forgot a {
-    color: red; font-size:13px;
+    color: red; font-size:13px; float:right;
 }
 .contact{min-height:400px;}
 /* 

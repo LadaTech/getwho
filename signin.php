@@ -6,11 +6,11 @@ session_start();
 <!-- Hero Section -->
 
 
-<div class="service-area inner-padding7">
+<div class="service-area inner-padding5">
     <div class="container">
         <div class="row">
-            <div class="col-md-4 col-sm-12 col-xs-12"></div>
-            <div class="col-md-4 col-sm-12 col-xs-12 well">
+            <div class="col-md-2 col-sm-12 col-xs-12"></div>
+            <div class="col-md-8 col-sm-12 col-xs-12 well">
                 <div class="something">
 
                     <?php
@@ -22,42 +22,47 @@ session_start();
                         echo "<font color=red>error while registering</font>";
                     }
                     ?>
-                    <h3>Log in to Get Who is</h3>
-                    <form id="signin" name="signin" method="post" enctype="multipart/form-data" action="signin_form.php">
+                    <h3>Register to Get Who is</h3>
+                    <form id="signin" class="form-horizontal" name="signin" method="post" enctype="multipart/form-data" action="signin_form.php">
                         <div class="form-group">
-                            <label for="FirstName"> First Name</label>
-                            <input type="text" class="form-control" id="firstname"  name="firstname" placeholder="Email">
+                            <label for="FirstName" class="col-sm-2 control-label"> First Name</label>
+                            <div class="col-sm-4">
+                            <input type="text" class="form-control" id="firstname"  name="firstname" placeholder="firstname">
+                            </div>
+                         
+                            <label for="LastName" class="col-sm-2 control-label">Last Name</label>
+                            <div class="col-sm-4">
+                            <input type="text" class="form-control" id="lastname"  name="lastname"placeholder="lastname">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="LastName">Last Name</label>
-                            <input type="text" class="form-control" id="lastname"  name="lastname"placeholder="Password">
-                        </div>
-                        <div class="form-group">
-                            <label for="Email">Email address</label>
+                            <label for="Email" class="col-sm-2 control-label">Email address</label>
+                            <div class="col-sm-4">
                             <input type="email" class="form-control" id="Email" name="email" placeholder="Email">
+                            </div>
+                            <label for="Email" class="col-sm-2 control-label">Phone</label>
+                            <div class="col-sm-4">
+                            <input type="email" class="form-control" id="Phone Number" name="Phone Number" placeholder="Phone Number">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="password">Password</label>
+                            <label for="password" class="col-sm-2 control-label">Password</label>
+                            <div class="col-sm-4">
                             <input type="password" class="form-control" id="password" name="password" placeholder="password">
-                        </div>                   
-                        <div class="form-group">
-                            <label for="cpassword">confirm PassWord</label>
+                            </div>
+                            <label for="cpassword" class="col-sm-2 control-label">confirm PassWord</label>
+                            <div class="col-sm-4">
                             <input type="password" class="form-control" id="cpassword" name="cpassword"placeholder="confirm password">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="text" class="form-control" id="phoneno" name="phoneno" placeholder="phone number">
-                        </div>                    
-                        <div class="form-group">
-                            <label for="address">Address:</label>
-                            <textarea name="address" id="address" rows="3" cols="35"></textarea>
-                        </div>
-
-                        <div class="forgot">
-                            <label>
-                                <a href="#">Forgot Password?</a>
-                            </label>
-                        </div>
+                                         
+                        <!-- <div class="form-group">
+                            <label for="address" class="col-sm-2 control-label">Address:</label>
+                            <div class="col-sm-8">
+                            <textarea name="address" id="address" rows="3" cols="70"></textarea>
+                            </div>
+                        </div> -->
+ 
                         <!--<input type="submit" id="sign_in" name="sign_in" class="btn btn-default" value="submit">-->
                         <button type="submit" id="sign_in" name="sign_in" class="btn btn-default">submit</button>
                         <div id="error_message" class="ajax_response" style="float:left"></div>
@@ -74,7 +79,7 @@ session_start();
                             </div>
                         </div> 
                     </form>
-
+                     
                 </div>
             </div>
         </div>
