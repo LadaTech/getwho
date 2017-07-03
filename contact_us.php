@@ -26,7 +26,7 @@ if (isset($_POST['sendmessage'])) {
     if ($checkEmail) {
         $to_reply = trim($_POST['email']);
         $subject_reply = 'DO NOT REPLY';
-        $message_reply = 'Thanks for subscribing..we will touch you soon..';
+        $message_reply = 'Thanks for subscribing.We will get back to you soon..';
         $from_reply = trim('janibasha@ladatechnologies.com');
         $headers = 'From:'. $from_reply . "\r\n";
         $headers .= 'X-Mailer: PHP/' . phpversion() . "\r\n";
