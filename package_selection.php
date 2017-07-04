@@ -1,11 +1,10 @@
-<?PHP
- include_once('header.php');
+<?PHP  include_once('header.php');
 $package_type = $_REQUEST['type'];
 ?>
 
-<!-- Hero Section -->
+ Hero Section 
 
-<!--<div class="contact">
+<div class="contact">
     <div class="container inner-padding7" style="margin-top:100px;">       
         <div class="row">
             <h3>Your Are Selected <?PHP echo $package_type ?> Package </br>Please Fill The Following Details</h3>
@@ -55,7 +54,6 @@ $package_type = $_REQUEST['type'];
 <script type="text/javascript" src="js/jquery.validate.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-//        alert('praveen');
         $("#contactUsForm").validate({
             rules: {
                 name: {
@@ -90,5 +88,5 @@ $package_type = $_REQUEST['type'];
             },
         });
     })
-</script>-->
+</script>
 
