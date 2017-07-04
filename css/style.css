@@ -15,7 +15,10 @@
        url('webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
        url('webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
 }
-
+.error {
+    color: #ff0000;
+    font-size: 12px;
+}
 .preloader-wrap {
     position: fixed;
     width: 100%;
